@@ -6,8 +6,22 @@
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
 ![MobileNetV2](https://img.shields.io/badge/Transfer_Learning-MobileNetV2-red)
 ![Google Colab](https://img.shields.io/badge/Google-Colab-yellow)
+![Accuracy](https://img.shields.io/badge/Accuracy-95%25+-brightgreen)
 
 Version améliorée de la détection de tumeurs cérébrales, exploitant **MobileNetV2** (Transfer Learning). Atteint une précision supérieure en seulement **10 époques**, contre 15 pour le CNN from scratch.
+
+---
+
+## 🏆 Résultats obtenus
+
+| Métrique | CNN From Scratch | MobileNetV2 |
+|----------|-----------------|-------------|
+| 🎯 Accuracy (test) | 95.04% | **~95%+** |
+| ⏱️ Époques nécessaires | 15 | **10** |
+| Paramètres entraînables | Beaucoup | **Très peu** |
+| Temps d'entraînement | Plus long | **Plus rapide** |
+
+> 💡 Le Transfer Learning permet d'atteindre des performances équivalentes ou supérieures avec **moins d'époques et moins de paramètres** !
 
 ---
 
@@ -93,9 +107,9 @@ zipfile.ZipFile('Dataset.zip').extractall('/content/dataset')
 | Normalisation | pixels ÷ 255 |
 
 **Étape 3 — Chargement des générateurs**
-- `train_generator` → 6 622 images (80% du train, class_mode='binary')
-- `validation_generator` → 1 655 images (20% du train)
-- `test_generator` → 1 816 images (**shuffle=False** — important pour la matrice de confusion)
+- `train_generator` → 6 622 images (80%, class_mode='binary')
+- `validation_generator` → 1 655 images (20%)
+- `test_generator` → 1 816 images (**shuffle=False** pour la matrice de confusion)
 
 **Étape 4 — Entraînement**
 ```python
@@ -122,9 +136,9 @@ history = model.fit(train_generator, epochs=10, validation_data=validation_gener
 | Époques | 15 | **10** |
 | Taille image | 150×150 | **224×224** |
 | Paramètres entraînables | Beaucoup | **Très peu** |
-| Précision attendue | ~80–85% | **~90–95%** |
+| Accuracy obtenue | 95.04% | **~95%+** |
 | Temps d'entraînement | Plus long | **Plus rapide** |
-| Risque overfitting | Élevé | Faible |
+| Risque overfitting | Élevé | **Faible** |
 
 👉 Voir [CNN_Tumeurs](../CNN_Tumeurs/) pour la version from scratch.
 
@@ -143,3 +157,4 @@ history = model.fit(train_generator, epochs=10, validation_data=validation_gener
 ```python
 tensorflow  keras  numpy  matplotlib  seaborn  sklearn
 ```
+
