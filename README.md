@@ -33,17 +33,17 @@ Collection de 4 projets de Deep Learning réalisés en **Python** sur **Google C
 
 ---
 
-## 🗂️ Datasets (Google Drive)
+## 🗂️ Datasets (Téléchargement Google Drive)
 
-Les datasets sont stockés sur Google Drive dans le dossier `Projet_CNN/` :
+Les datasets originaux sont accessibles via les liens suivants :
 
-| Fichier | Utilisé par |
-|---------|-------------|
-| `emotions3.zip` | CNN Émotions |
-| `mask_dataset.zip` | CNN Masque |
-| `Dataset.zip` | CNN Tumeurs & CNN MobileNet Tumeurs |
+| Fichier | Lien de téléchargement | Utilisé par |
+|---------|-----------------------|-------------|
+| `emotions3.zip` | [📥 Télécharger](https://drive.google.com/file/d/1B9dscPm2tgX_KHC63LyHrenLuEfaG5hg/view?usp=drive_link) | CNN Émotions |
+| `mask_dataset.zip` | [📥 Télécharger](https://drive.google.com/file/d/15QHM2t446vbjo2vSCYKsHMKhf9h51LUq/view?usp=drive_link) | CNN Masque |
+| `Dataset.zip` | [📥 Télécharger](https://drive.google.com/file/d/1w1HBJPu1MEWKEtQCfPIu8GdMxAWg5nCl/view?usp=drive_link) | CNN Tumeurs & MobileNet |
 
-> 📌 Pour utiliser ces notebooks, montez votre Google Drive et placez les fichiers zip dans `MyDrive/Projet_CNN/`.
+> 📌 **Note :** Pour exécuter les notebooks, importez ces fichiers `.zip` dans votre Google Drive sous le chemin `MyDrive/Projet_CNN/`.
 
 ---
 
