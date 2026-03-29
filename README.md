@@ -6,50 +6,80 @@
 ![Google Colab](https://img.shields.io/badge/Google-Colab-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-Collection de **4 projets de Deep Learning** réalisés en Python sur Google Colab, dans le cadre du module **Python Avancé** (filière GSEIR-3 — ENSA Oujda). Chaque projet applique des réseaux de neurones convolutifs (CNN) à un domaine différent : reconnaissance d'émotions, détection de masque, et diagnostic de tumeurs cérébrales.
+Collection de **4 projets de Deep Learning** réalisés en **Python** sur **Google Colab**, dans le cadre du module **Python Avancé** (GSEIR-3 — ENSA Oujda). Chaque projet applique des réseaux de neurones convolutifs (CNN) à un domaine différent.
 
 ---
 
 ## 📁 Projets
 
-| # | Projet | Type CNN | Dataset | Classes | Images totales |
-|---|--------|----------|---------|---------|----------------|
-| 1 | [🎭 CNN Émotions](./CNN_Emotions/) | MobileNetV2 + Fine-Tuning | emotions3.zip | 5 émotions | ~47 720 |
-| 2 | [😷 CNN Masque](./CNN_Mask/) | MobileNetV2 + Transfer Learning | mask_dataset.zip | 2 classes | ~7 553 |
-| 3 | [🧬 CNN Tumeurs](./CNN_Tumeurs/) | CNN from Scratch | Dataset.zip | 2 classes | ~10 093 |
-| 4 | [🧬 CNN Tumeurs MobileNet](./CNN_MobileNet_Tumeurs/) | MobileNetV2 | Dataset.zip | 2 classes | ~10 093 |
+| # | Projet | Type CNN | Dataset | Classes | Accuracy |
+|---|--------|----------|---------|---------|----------|
+| 1 | [🎭 CNN Émotions](./CNN_Emotions/) | MobileNetV2 + Fine-Tuning | emotions3.zip | 5 émotions | **76.76%** |
+| 2 | [😷 CNN Masque](./CNN_Mask/) | MobileNetV2 + Transfer Learning | mask_dataset.zip | Avec/Sans masque | **99.07%** |
+| 3 | [🧬 CNN Tumeurs](./CNN_Tumeurs/) | CNN from scratch | Dataset.zip | Tumeur / Sain | **95.04%** |
+| 4 | [🧬 CNN Tumeurs MobileNet](./CNN_MobileNet_Tumeurs/) | MobileNetV2 | Dataset.zip | Tumeur / Sain | **~95%+** |
+
+---
+
+## 🏆 Résultats globaux
+
+| Projet | Accuracy Test | F1-Score | Époques | Dataset |
+|--------|--------------|----------|---------|---------|
+| 🎭 CNN Émotions | **76.76%** | 0.77 | 15 | 47 720 images — 5 classes |
+| 😷 CNN Masque | **99.07%** | 1.00 | 15 | 7 553 images — 2 classes |
+| 🧬 CNN Tumeurs (scratch) | **95.04%** | 0.95 | 15 | 10 093 images — 2 classes |
+| 🧬 CNN Tumeurs MobileNet | **~95%+** | — | 10 | 10 093 images — 2 classes |
 
 ---
 
 ## 🛠️ Stack technique commune
 
-| Outil | Rôle |
-|-------|------|
-| Python 3.10 | Langage principal |
-| TensorFlow / Keras | Framework Deep Learning |
-| MobileNetV2 | Modèle pré-entraîné (ImageNet) |
-| ImageDataGenerator | Chargement + Data Augmentation |
-| Scikit-learn | Matrice de confusion, rapport de classification |
-| Matplotlib / Seaborn | Courbes d'apprentissage, visualisation |
-| Google Colab | Environnement d'exécution (GPU gratuit) |
-| Google Drive | Stockage des datasets |
+- **Python 3.10** — Google Colab
+- **TensorFlow / Keras** — Deep Learning
+- **MobileNetV2** — Transfer Learning (ImageNet)
+- **ImageDataGenerator** — Data Augmentation
+- **Scikit-learn** — Évaluation (matrice de confusion, rapport)
+- **Matplotlib / Seaborn** — Visualisation des résultats
+- **Google Drive** — Stockage des datasets
 
 ---
 
-## 🗂️ Datasets
+## 🗂️ Datasets (Google Drive)
 
-Les datasets sont stockés sur Google Drive dans le dossier `MyDrive/Projet_CNN/` :
+Les datasets sont stockés sur Google Drive dans le dossier `Projet_CNN/` :
 
-| Fichier zip | Projet(s) | Classes |
-|-------------|-----------|---------|
-| `emotions3.zip` | CNN Émotions | colere, joie, neutre, peur, tristesse |
-| `mask_dataset.zip` | CNN Masque | with_mask, without_mask |
-| `Dataset.zip` | CNN Tumeurs & CNN MobileNet Tumeurs | Tumeur, Sain |
+| Fichier | Utilisé par | Taille |
+|---------|-------------|--------|
+| `emotions3.zip` | CNN Émotions | ~47 720 images |
+| `mask_dataset.zip` | CNN Masque | ~7 553 images |
+| `Dataset.zip` | CNN Tumeurs & CNN MobileNet Tumeurs | ~10 093 images |
 
-> 📌 Pour utiliser les notebooks, montez votre Google Drive et placez les fichiers zip dans `MyDrive/Projet_CNN/`. Le code gère l'extraction automatiquement.
+> 📌 Pour utiliser ces notebooks, montez votre Google Drive et placez les fichiers zip dans `MyDrive/Projet_CNN/`.
 
 ---
 
-## 👩‍💻 Auteure
+## 📁 Structure du dépôt
 
-**Jihane Bouras** — GSEIR-3, ENSA Oujda — Année académique 2024/2025
+```
+deep-learning-CNN/
+├── CNN_Emotions/
+│   ├── CNN_EMOTIONS.ipynb
+│   └── README.md
+├── CNN_Mask/
+│   ├── CNN_Mask.ipynb
+│   └── README.md
+├── CNN_Tumeurs/
+│   ├── CNN_Tumeurs.ipynb
+│   └── README.md
+├── CNN_MobileNet_Tumeurs/
+│   ├── CNN_MobileNet_Tumeurs.ipynb
+│   └── README.md
+└── README.md   ← ce fichier
+```
+
+---
+
+## 👩‍💻 Auteur
+
+**Jihane Bouras** — GSEIR-3, ENSA Oujda — Année 2024/2025
+
