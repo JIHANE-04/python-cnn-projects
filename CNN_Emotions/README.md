@@ -6,8 +6,33 @@
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
 ![MobileNetV2](https://img.shields.io/badge/Transfer_Learning-MobileNetV2-red)
 ![Google Colab](https://img.shields.io/badge/Google-Colab-yellow)
+![Accuracy](https://img.shields.io/badge/Accuracy-76.76%25-orange)
 
 Projet de classification des émotions faciales basé sur **MobileNetV2** avec **Fine-Tuning partiel**. Le modèle est capable de reconnaître **5 émotions humaines** à partir d'images de visages.
+
+---
+
+## 🏆 Résultats obtenus
+
+| Métrique | Valeur |
+|----------|--------|
+| 🎯 Accuracy (test) | **76.76%** |
+| 📉 Loss (test) | **0.8902** |
+| F1-Score macro | **0.77** |
+| Dataset de test | 5 341 images |
+
+### Rapport de classification détaillé
+
+| Émotion | Précision | Rappel | F1-Score | Support |
+|---------|-----------|--------|----------|---------|
+| colere | 0.79 | 0.77 | 0.78 | 1 000 |
+| joie | 0.85 | 0.81 | 0.83 | 1 000 |
+| neutre | 0.83 | 0.69 | 0.76 | 1 341 |
+| peur | 0.86 | 0.80 | 0.83 | 1 000 |
+| tristesse | 0.58 | 0.80 | 0.67 | 1 000 |
+| **accuracy** | | | **0.77** | **5 341** |
+
+> 📌 La reconnaissance des émotions est une tâche naturellement difficile (5 classes, expressions subtiles, variations de luminosité). Un score de **76.76% sur 47 720 images** est une très bonne performance pour un modèle entraîné en 15 époques.
 
 ---
 
@@ -29,8 +54,6 @@ Entraîner un CNN capable de **détecter et classifier automatiquement les émot
 | Images de validation (20%) | **8 475 images** |
 | Images de test | **5 341 images** |
 | **Total** | **~47 720 images** |
-
-> Le dataset est automatiquement détecté et extrait depuis Google Drive. Les dossiers `train/` et `test/` sont détectés dynamiquement par le code.
 
 ---
 
@@ -54,7 +77,7 @@ Entraîner un CNN capable de **détecter et classifier automatiquement les émot
 Input (96 × 96 × 3)
         ↓
 MobileNetV2 (poids ImageNet)
-  ├── Couches 0–79  : GELÉES  (détectent contours, textures, formes simples)
+  ├── Couches 0–79  : GELÉES  (contours, textures, formes simples)
   └── Couches 80+   : ENTRAÎNABLES (Fine-Tuning — adaptées aux émotions)
         ↓
 GlobalAveragePooling2D
@@ -67,7 +90,7 @@ Dense(5, activation='softmax')   ← 5 émotions
 ```
 
 **Pourquoi le Fine-Tuning ?**
-Le dataset contient plus de 47 000 images, ce qui est suffisant pour dégeler une partie de MobileNetV2 et l'adapter aux visages humains, améliorant ainsi la précision par rapport au Transfer Learning classique (modèle totalement gelé).
+Le dataset contient plus de 47 000 images, ce qui est suffisant pour dégeler une partie de MobileNetV2 et l'adapter aux visages humains, améliorant la précision par rapport au Transfer Learning classique.
 
 ---
 
@@ -91,9 +114,9 @@ zipfile.ZipFile('emotions3.zip').extractall('/content/dataset_emotions')
 | Normalisation | pixels ÷ 255 |
 
 **Étape 3 — Chargement des générateurs**
-- `train_generator` → 33 904 images (80% du train)
-- `validation_generator` → 8 475 images (20% du train)
-- `test_generator` → 5 341 images (dossier test, sans augmentation)
+- `train_generator` → 33 904 images (80%)
+- `validation_generator` → 8 475 images (20%)
+- `test_generator` → 5 341 images (sans augmentation)
 
 **Étape 4 — Entraînement**
 ```python
@@ -117,7 +140,6 @@ history = model.fit(train_generator, epochs=15, validation_data=validation_gener
 1. Ouvrez `CNN_EMOTIONS.ipynb` sur **Google Colab**
 2. Placez `emotions3.zip` dans `MyDrive/Projet_CNN/`
 3. Exécutez les cellules dans l'ordre *(Runtime → Run all)*
-4. Le modèle se connecte, extrait, s'entraîne et évalue automatiquement
 
 ---
 
@@ -126,3 +148,4 @@ history = model.fit(train_generator, epochs=15, validation_data=validation_gener
 ```python
 tensorflow  keras  numpy  matplotlib  seaborn  sklearn
 ```
+
