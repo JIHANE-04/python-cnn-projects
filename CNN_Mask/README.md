@@ -7,8 +7,30 @@
 ![MobileNetV2](https://img.shields.io/badge/Transfer_Learning-MobileNetV2-red)
 ![OpenCV](https://img.shields.io/badge/OpenCV-cv2-green)
 ![Google Colab](https://img.shields.io/badge/Google-Colab-yellow)
+![Accuracy](https://img.shields.io/badge/Accuracy-99.07%25-brightgreen)
 
 Projet de détection du port du masque basé sur **MobileNetV2** avec Transfer Learning, enrichi d'une démonstration en **temps réel via webcam**. Le modèle classifie chaque image comme **avec masque** ou **sans masque**.
+
+---
+
+## 🏆 Résultats obtenus
+
+| Métrique | Valeur |
+|----------|--------|
+| 🎯 Accuracy (validation) | **99.07%** |
+| 📉 Loss (validation) | **0.2163** |
+| F1-Score macro | **1.00** |
+| Dataset de validation | 1 510 images |
+
+### Rapport de classification détaillé
+
+| Classe | Précision | Rappel | F1-Score | Support |
+|--------|-----------|--------|----------|---------|
+| with_mask | 1.00 | 0.99 | 1.00 | 745 |
+| without_mask | 0.99 | 1.00 | 1.00 | 765 |
+| **accuracy** | | | **1.00** | **1 510** |
+
+> 🌟 Le modèle atteint **99.07% d'accuracy** — quasiment parfait sur la détection de masque !
 
 ---
 
@@ -29,8 +51,6 @@ Entraîner un CNN capable de **détecter automatiquement si une personne porte u
 | Images d'entraînement (80%) | **6 043 images** |
 | Images de validation (20%) | **1 510 images** |
 | **Total** | **~7 553 images** |
-
-> Le dataset est divisé automatiquement en 80% entraînement / 20% validation via `validation_split=0.2`.
 
 ---
 
@@ -102,7 +122,7 @@ Ce projet inclut une démonstration unique : la **détection en temps réel via 
 2. Décodage Base64 de l'image capturée
 3. Traitement avec **OpenCV** (redimensionnement, normalisation)
 4. Prédiction instantanée du modèle
-5. Affichage du résultat avec rectangle et texte superposés sur l'image
+5. Affichage du résultat avec rectangle et texte superposés
 
 ```python
 from IPython.display import display, Javascript
@@ -128,7 +148,7 @@ import cv2
 1. Ouvrez `CNN_Mask.ipynb` sur **Google Colab**
 2. Placez `mask_dataset.zip` dans `MyDrive/Projet_CNN/`
 3. Exécutez les cellules dans l'ordre
-4. Autorisez l'accès à la **webcam** quand demandé par le navigateur
+4. Autorisez l'accès à la **webcam** quand demandé
 
 ---
 
@@ -137,3 +157,4 @@ import cv2
 ```python
 tensorflow  keras  numpy  matplotlib  seaborn  sklearn  opencv-python
 ```
+
