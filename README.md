@@ -6,47 +6,50 @@
 ![Google Colab](https://img.shields.io/badge/Google-Colab-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-Collection de 4 projets de Deep Learning réalisés en **Python** sur **Google Colab**, dans le cadre du module **Python Avancé** (GSEIR-3 — ENSA Oujda). Chaque projet applique des réseaux de neurones convolutifs (CNN) à un domaine différent.
+Collection de **4 projets de Deep Learning** réalisés en Python sur Google Colab, dans le cadre du module **Python Avancé** (filière GSEIR-3 — ENSA Oujda). Chaque projet applique des réseaux de neurones convolutifs (CNN) à un domaine différent : reconnaissance d'émotions, détection de masque, et diagnostic de tumeurs cérébrales.
 
 ---
 
 ## 📁 Projets
 
-| # | Projet | Type CNN | Dataset | Classes |
-|---|--------|----------|---------|---------|
-| 1 | [🎭 CNN Émotions](./CNN_Emotions/) | MobileNetV2 + Fine-Tuning | emotions3.zip | Émotions faciales |
-| 2 | [😷 CNN Masque](./CNN_Mask/) | MobileNetV2 + Transfer Learning | mask_dataset.zip | Avec/Sans masque |
-| 3 | [🧬 CNN Tumeurs](./CNN_Tumeurs/) | CNN from scratch | Dataset.zip | Tumeur / Sain |
-| 4 | [🧬 CNN Tumeurs MobileNet](./CNN_MobileNet_Tumeurs/) | MobileNetV2 | Dataset.zip | Tumeur / Sain |
+| # | Projet | Type CNN | Dataset | Classes | Images totales |
+|---|--------|----------|---------|---------|----------------|
+| 1 | [🎭 CNN Émotions](./CNN_Emotions/) | MobileNetV2 + Fine-Tuning | emotions3.zip | 5 émotions | ~47 720 |
+| 2 | [😷 CNN Masque](./CNN_Mask/) | MobileNetV2 + Transfer Learning | mask_dataset.zip | 2 classes | ~7 553 |
+| 3 | [🧬 CNN Tumeurs](./CNN_Tumeurs/) | CNN from Scratch | Dataset.zip | 2 classes | ~10 093 |
+| 4 | [🧬 CNN Tumeurs MobileNet](./CNN_MobileNet_Tumeurs/) | MobileNetV2 | Dataset.zip | 2 classes | ~10 093 |
 
 ---
 
 ## 🛠️ Stack technique commune
 
-- **Python 3.10** — Google Colab
-- **TensorFlow / Keras** — Deep Learning
-- **MobileNetV2** — Transfer Learning (ImageNet)
-- **ImageDataGenerator** — Data Augmentation
-- **Scikit-learn** — Évaluation (matrice de confusion, rapport)
-- **Matplotlib / Seaborn** — Visualisation des résultats
-- **Google Drive** — Stockage des datasets
+| Outil | Rôle |
+|-------|------|
+| Python 3.10 | Langage principal |
+| TensorFlow / Keras | Framework Deep Learning |
+| MobileNetV2 | Modèle pré-entraîné (ImageNet) |
+| ImageDataGenerator | Chargement + Data Augmentation |
+| Scikit-learn | Matrice de confusion, rapport de classification |
+| Matplotlib / Seaborn | Courbes d'apprentissage, visualisation |
+| Google Colab | Environnement d'exécution (GPU gratuit) |
+| Google Drive | Stockage des datasets |
 
 ---
 
-## 🗂️ Datasets (Google Drive)
+## 🗂️ Datasets
 
-Les datasets sont stockés sur Google Drive dans le dossier `Projet_CNN/` :
+Les datasets sont stockés sur Google Drive dans le dossier `MyDrive/Projet_CNN/` :
 
-| Fichier | Utilisé par |
-|---------|-------------|
-| `emotions3.zip` | CNN Émotions |
-| `mask_dataset.zip` | CNN Masque |
-| `Dataset.zip` | CNN Tumeurs & CNN MobileNet Tumeurs |
+| Fichier zip | Projet(s) | Classes |
+|-------------|-----------|---------|
+| `emotions3.zip` | CNN Émotions | colere, joie, neutre, peur, tristesse |
+| `mask_dataset.zip` | CNN Masque | with_mask, without_mask |
+| `Dataset.zip` | CNN Tumeurs & CNN MobileNet Tumeurs | Tumeur, Sain |
 
-> 📌 Pour utiliser ces notebooks, montez votre Google Drive et placez les fichiers zip dans `MyDrive/Projet_CNN/`.
+> 📌 Pour utiliser les notebooks, montez votre Google Drive et placez les fichiers zip dans `MyDrive/Projet_CNN/`. Le code gère l'extraction automatiquement.
 
 ---
 
-## 👩‍💻 Auteur
+## 👩‍💻 Auteure
 
-**Jihane Bouras** — GSEIR-3, ENSA Oujda — Année 2024/2025
+**Jihane Bouras** — GSEIR-3, ENSA Oujda — Année académique 2024/2025

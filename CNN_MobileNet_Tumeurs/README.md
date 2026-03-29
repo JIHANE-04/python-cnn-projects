@@ -1,26 +1,36 @@
 # 🧬 CNN Détection de Tumeurs — MobileNetV2 Transfer Learning
 
+> 📁 Dossier : `CNN_MobileNet_Tumeurs/` — Fichier : `CNN_MobileNet_Tumeurs.ipynb`
+
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
 ![MobileNetV2](https://img.shields.io/badge/Transfer_Learning-MobileNetV2-red)
 ![Google Colab](https://img.shields.io/badge/Google-Colab-yellow)
 
-Projet de détection de tumeurs cérébrales basé sur **MobileNetV2** (Transfer Learning). Version améliorée du [CNN from scratch](../CNN_Tumeurs/), atteignant une précision élevée en seulement **10 époques**.
+Version améliorée de la détection de tumeurs cérébrales, exploitant **MobileNetV2** (Transfer Learning). Atteint une précision supérieure en seulement **10 époques**, contre 15 pour le CNN from scratch.
 
 ---
 
 ## 🎯 Objectif
 
-Exploiter la puissance du **Transfer Learning** avec MobileNetV2 pour détecter la présence ou l'absence d'une tumeur cérébrale sur des images IRM, en comparaison avec le CNN from scratch.
+Démontrer la **supériorité du Transfer Learning** sur un CNN from scratch pour la détection de tumeurs cérébrales, en utilisant MobileNetV2 pré-entraîné sur ImageNet comme extracteur de features.
 
 ---
 
-## 🗂️ Dataset
+## 🗂️ Dataset — `Dataset.zip`
 
-- **Fichier** : `Dataset.zip` (stocké sur Google Drive dans `Projet_CNN/`)
-- **Structure** : dossiers `train/` et `test/`, deux classes
-- **Classes** : `Tumeur` (1) / `Sain` (0)
-- **Type** : Classification binaire
+| Élément | Détail |
+|---------|--------|
+| Fichier | `Dataset.zip` → `MyDrive/Projet_CNN/Dataset.zip` |
+| Extraction | `/content/dataset` |
+| Nombre de classes | **2 classes** |
+| Classes | `Tumeur` (1) · `Sain` (0) |
+| Images d'entraînement (80%) | **6 622 images** |
+| Images de validation (20%) | **1 655 images** |
+| Images de test | **1 816 images** |
+| **Total** | **~10 093 images** |
+
+> Même dataset que le CNN from scratch, permettant une comparaison directe des performances.
 
 ---
 
@@ -28,23 +38,27 @@ Exploiter la puissance du **Transfer Learning** avec MobileNetV2 pour détecter 
 
 | Paramètre | Valeur |
 |-----------|--------|
-| Taille des images | 224 × 224 px |
+| Taille des images | **224 × 224 px** |
 | Batch size | 32 |
-| Époques | 10 |
+| Époques | **10** |
 | Optimiseur | Adam |
-| Split validation | 20% |
+| Split validation | 80% train / 20% validation |
 | Loss | Binary Crossentropy |
-| Sortie | Sigmoid (1 neurone) |
+| Activation sortie | Sigmoid (1 neurone) |
+| Type de classification | Binaire (0 = Sain / 1 = Tumeur) |
 
 > ✅ MobileNetV2 fonctionne de manière optimale avec des images **224×224** (taille native d'ImageNet).
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture — MobileNetV2 (totalement gelé)
 
 ```
-MobileNetV2 (poids ImageNet — totalement gelé)
-  └── base_model.trainable = False
+Input (224 × 224 × 3)
+        ↓
+MobileNetV2 (poids ImageNet — base_model.trainable = False)
+  └── Toutes les couches GELÉES
+  └── Extraction de features sans réentraînement
         ↓
 GlobalAveragePooling2D
         ↓
@@ -54,74 +68,78 @@ Dense(1, sigmoid)   ← 0 = Sain / 1 = Tumeur
 ```
 
 **Pourquoi geler tout MobileNetV2 ?**
-- Le dataset tumeurs est relativement petit
-- Les poids ImageNet sont déjà excellents pour extraire des features
-- On évite l'overfitting en ne réentraînant que la tête de classification
+Le dataset (~10 000 images) est relativement modeste. Geler entièrement la base évite l'overfitting et permet d'obtenir d'excellentes performances en ne réentraînant que le classificateur final (3 couches seulement).
 
 ---
 
-## 🔄 Pipeline d'entraînement
+## 🔄 Pipeline complet
 
-**1. Connexion Google Drive & extraction**
+**Étape 1 — Connexion & extraction**
 ```python
 drive.mount('/content/drive')
-zipfile.ZipFile(chemin_zip).extractall('/content/dataset')
+zipfile.ZipFile('Dataset.zip').extractall('/content/dataset')
 ```
 
-**2. Data Augmentation (train uniquement)**
-- Rotation : ±20°
-- Décalages horizontal/vertical : 10%
-- Cisaillement : 10%
-- Zoom : 10%
-- Miroir horizontal
-- `fill_mode='nearest'`
-- Normalisation : pixels ÷ 255
+**Étape 2 — Data Augmentation** *(train uniquement)*
+| Transformation | Valeur |
+|----------------|--------|
+| Rotation | ±20° |
+| Décalage horizontal | 10% |
+| Décalage vertical | 10% |
+| Cisaillement | 10% |
+| Zoom | 10% |
+| Miroir horizontal | ✅ |
+| fill_mode | nearest |
+| Normalisation | pixels ÷ 255 |
 
-**3. Générateurs**
-- `train_generator` → 80% du dossier train
-- `validation_generator` → 20% du dossier train
-- `test_generator` → dossier test séparé (shuffle=False)
+**Étape 3 — Chargement des générateurs**
+- `train_generator` → 6 622 images (80% du train, class_mode='binary')
+- `validation_generator` → 1 655 images (20% du train)
+- `test_generator` → 1 816 images (**shuffle=False** — important pour la matrice de confusion)
 
-**4. Entraînement**
+**Étape 4 — Entraînement**
 ```python
 history = model.fit(train_generator, epochs=10, validation_data=validation_generator)
 ```
 
-> 💡 Seulement **10 époques** suffisent grâce au Transfer Learning (vs 15 pour le CNN from scratch) !
+> 💡 Seulement **10 époques** suffisent grâce au Transfer Learning !
 
 ---
 
-## 📊 Évaluation
+## 📊 Évaluation & Visualisations
 
-- **Accuracy & Loss** finales sur le dataset de test
-- **Courbes d'apprentissage** (accuracy et loss par époque)
-- **Matrice de confusion** (heatmap Seaborn)
-- **Rapport de classification** (précision, rappel, F1-score)
+- ✅ **Accuracy & Loss** finales sur le dataset de test (1 816 images)
+- ✅ **Courbes d'apprentissage** (accuracy et loss sur 10 époques)
+- ✅ **Matrice de confusion** 2×2 (heatmap Seaborn)
+- ✅ **Rapport de classification** (précision, rappel, F1-score)
 
 ---
 
-## ⚖️ Comparaison CNN from scratch vs MobileNetV2
+## ⚖️ Comparaison CNN from Scratch vs MobileNetV2
 
 | Critère | CNN From Scratch | MobileNetV2 |
 |---------|-----------------|-------------|
-| Époques | 15 | 10 |
-| Taille image | 150×150 | 224×224 |
-| Paramètres entraînables | Beaucoup | Très peu |
-| Précision attendue | ~80-85% | ~90-95% |
-| Temps d'entraînement | Plus long | Plus rapide |
+| Époques | 15 | **10** |
+| Taille image | 150×150 | **224×224** |
+| Paramètres entraînables | Beaucoup | **Très peu** |
+| Précision attendue | ~80–85% | **~90–95%** |
+| Temps d'entraînement | Plus long | **Plus rapide** |
+| Risque overfitting | Élevé | Faible |
+
+👉 Voir [CNN_Tumeurs](../CNN_Tumeurs/) pour la version from scratch.
 
 ---
 
 ## 🚀 Utilisation
 
-1. Ouvrez le notebook sur **Google Colab**
+1. Ouvrez `CNN_MobileNet_Tumeurs.ipynb` sur **Google Colab**
 2. Placez `Dataset.zip` dans `MyDrive/Projet_CNN/`
-3. Exécutez les cellules dans l'ordre
+3. Exécutez les cellules dans l'ordre *(Runtime → Run all)*
 
 ---
 
-## 📦 Librairies requises
+## 📦 Librairies
 
 ```python
-tensorflow, keras, numpy, matplotlib, seaborn, sklearn
+tensorflow  keras  numpy  matplotlib  seaborn  sklearn
 ```
