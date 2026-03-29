@@ -6,8 +6,29 @@
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
 ![CNN](https://img.shields.io/badge/CNN-From_Scratch-purple)
 ![Google Colab](https://img.shields.io/badge/Google-Colab-yellow)
+![Accuracy](https://img.shields.io/badge/Accuracy-95.04%25-brightgreen)
 
 Projet de détection de tumeurs cérébrales sur images IRM, en construisant un **CNN from scratch** (sans Transfer Learning). Le modèle effectue une **classification binaire** : tumeur / sain. Ce projet sert de baseline à comparer avec la version MobileNetV2.
+
+---
+
+## 🏆 Résultats obtenus
+
+| Métrique | Valeur |
+|----------|--------|
+| 🎯 Accuracy (test) | **95.04%** |
+| 📉 Loss (test) | **0.1054** |
+| F1-Score (no tumor) | **0.95** |
+| F1-Score (tumor) | **0.95** |
+| F1-Score macro | **0.95** |
+
+### Rapport de classification détaillé
+
+| Classe | Précision | Rappel | F1-Score | Support |
+|--------|-----------|--------|----------|---------|
+| no tumor | 0.91 | 1.00 | 0.95 | 910 |
+| tumor | 1.00 | 0.90 | 0.95 | 906 |
+| **accuracy** | | | **0.95** | **1816** |
 
 ---
 
@@ -29,8 +50,6 @@ Concevoir et entraîner un réseau de neurones convolutif **entièrement from sc
 | Images de validation (20%) | **1 655 images** |
 | Images de test | **1 816 images** |
 | **Total** | **~10 093 images** |
-
-> Les dossiers `train/` et `test/` sont détectés automatiquement par le code via `os.walk()`.
 
 ---
 
@@ -77,7 +96,7 @@ Dense(1, sigmoid)   ← 0 = Sain / 1 = Tumeur
 - **64 filtres** : capturent des formes plus complexes (motifs, textures)
 - **128 filtres** : identifient des caractéristiques fines spécifiques aux tumeurs
 
-**Dropout(0.5)** : désactive aléatoirement 50% des neurones à chaque itération pour éviter l'overfitting.
+**Dropout(0.5)** : désactive aléatoirement 50% des neurones pour éviter l'overfitting.
 
 ---
 
@@ -102,9 +121,9 @@ zipfile.ZipFile('Dataset.zip').extractall('/content/dataset')
 | Normalisation | pixels ÷ 255 |
 
 **Étape 3 — Chargement des générateurs**
-- `train_generator` → 6 622 images (80% du train, shuffle=True)
-- `validation_generator` → 1 655 images (20% du train, shuffle=True)
-- `test_generator` → 1 816 images (dossier test, **shuffle=False** pour la matrice de confusion)
+- `train_generator` → 6 622 images (80%, shuffle=True)
+- `validation_generator` → 1 655 images (20%, shuffle=True)
+- `test_generator` → 1 816 images (**shuffle=False** pour la matrice de confusion)
 
 **Étape 4 — Entraînement**
 ```python
@@ -123,15 +142,15 @@ history = model.fit(train_generator, epochs=15, validation_data=validation_gener
 
 ---
 
-## 🔬 Comparaison avec MobileNetV2
+## ⚖️ Comparaison avec MobileNetV2
 
 | Critère | CNN From Scratch | MobileNetV2 |
 |---------|-----------------|-------------|
-| Époques | 15 | 10 |
-| Taille image | 150×150 | 224×224 |
-| Paramètres entraînables | Beaucoup | Très peu |
-| Précision attendue | ~80–85% | ~90–95% |
-| Temps d'entraînement | Plus long | Plus rapide |
+| Époques | 15 | **10** |
+| Taille image | 150×150 | **224×224** |
+| Paramètres entraînables | Beaucoup | **Très peu** |
+| Accuracy obtenue | **95.04%** | **~95%+** |
+| Temps d'entraînement | Plus long | **Plus rapide** |
 
 👉 Voir [CNN_MobileNet_Tumeurs](../CNN_MobileNet_Tumeurs/) pour la version Transfer Learning.
 
@@ -150,3 +169,4 @@ history = model.fit(train_generator, epochs=15, validation_data=validation_gener
 ```python
 tensorflow  keras  numpy  matplotlib  seaborn  sklearn
 ```
+
